@@ -19,6 +19,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "delay.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -97,7 +98,8 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+	  delay_us(1000000, &htim2);
+	  HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
