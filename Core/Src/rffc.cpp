@@ -15,9 +15,9 @@
 */
 
 #define RFFC5071_SCL()	delay_us(RFFC5071_FSCL, &htim2);\
-						gpio_set_pin_high(chip->scl);\
+						HAL_GPIO_WritePin(Port_sclk, Pin_sclk, GPIO_PIN_SET);\
 						delay_us(RFFC5071_FSCL, &htim2);\
-						gpio_set_pin_low(chip->scl)
+						HAL_GPIO_WritePin(Port_sclk, Pin_sclk, GPIO_PIN_RESET)
 
 extern TIM_HandleTypeDef htim2;
 
@@ -45,5 +45,6 @@ void RFFC::waitGPIO4IsHigh()
 
 uint16_t RFFC::read(uint8_t reg)
 {
+
 	return 0;
 }
