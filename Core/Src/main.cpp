@@ -101,7 +101,7 @@ int main(void)
 
   HAL_TIM_Base_Start(&htim2);
 
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
+  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
 
   /* USER CODE END 2 */
 

@@ -39,6 +39,15 @@ public:
 	uint16_t read(uint8_t reg);
 	void set_freq(uint64_t freq);
 	void waitGPIO4IsHigh();
+
+	GPIO_TypeDef *Port_sclk;
+	uint16_t Pin_sclk;
+	GPIO_TypeDef *Port_sdata;
+	uint16_t Pin_sdata;
+	GPIO_TypeDef *Port_resetx;
+	uint16_t Pin_resetx;
+	GPIO_TypeDef *Port_enx;
+	uint16_t Pin_enx;
 };
 
 
