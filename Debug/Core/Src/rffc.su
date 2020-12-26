@@ -1,0 +1,3 @@
+rffc.cpp:17:1:RFFC::RFFC(GPIO_TypeDef*, uint16_t, GPIO_TypeDef*, uint16_t, GPIO_TypeDef*, uint16_t, GPIO_TypeDef*, uint16_t)	24	static
+rffc.cpp:22:6:void RFFC::waitGPIO4IsHigh()	24	static
+rffc.cpp:32:10:uint16_t RFFC::read(uint8_t)	16	static
