@@ -7,3 +7,5 @@ In main.cpp modify the function definition as :<br />
 extern "C" void SystemClock_Config(void);
 ```
 <img alt="NO IMAGE" src="SystemClock_Config.png"><br>
+But this chages is not required in case of STM32F103C8T6 . Do not know why.<br />
+
