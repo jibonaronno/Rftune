@@ -58,7 +58,6 @@ void RFFC::write(uint8_t reg, uint16_t val)
 	HAL_GPIO_WritePin(Port_sdata, Pin_sdata, GPIO_PIN_RESET);
 	RFFC5071_SCL();
 	//reg's MSB is zero already, and will be sent as W bit
-	//reg's MSB is zero already, and will be sent as W bit
 	for(i=0; i<8; i++)
 	{
 		if(rmask & reg)
@@ -74,6 +73,26 @@ void RFFC::write(uint8_t reg, uint16_t val)
 		RFFC5071_SCL();
 		rmask >>= 1;
 	}
+	//now the value
+	for(i=0; i<16; i++)
+	{
+		if(vmask & val)
+		{
+			//gpio_set_pin_high(chip->sda);
+			HAL_GPIO_WritePin(Port_sdata, Pin_sdata, GPIO_PIN_SET);
+		}
+		else
+		{
+			//gpio_set_pin_low(chip->sda);
+			HAL_GPIO_WritePin(Port_sdata, Pin_sdata, GPIO_PIN_RESET);
+		}
+		RFFC5071_SCL();
+		vmask >>= 1;
+	}
+	//pull enx high again
+	gpio_set_pin_high(chip->enx);
+	//one clock after enx goes high, undocumented
+	RFFC5071_SCL();
 }
 
 uint16_t RFFC::read(uint8_t reg)
