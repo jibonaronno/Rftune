@@ -30,6 +30,15 @@
 #include <stdint.h>
 #include "main.h"
 
+typedef enum
+{
+DIR_INPUT,
+DIR_OUTPUT
+}Data_Direction;
+
+#define PIN_MODE_OUTPUT	1
+#define PIN_MODE_INPUT	0
+
 class RFFC
 {
 public:
@@ -38,7 +47,7 @@ public:
 	void write(uint8_t reg, uint16_t val);
 	uint16_t read(uint8_t reg);
 	void set_freq(uint64_t freq);
-	void waitGPIO4IsHigh();
+	void waitGPIO4IsHigh(GPIO_TypeDef *port, uint16_t pin);
 
 	GPIO_TypeDef *Port_sclk;
 	uint16_t Pin_sclk;
@@ -48,6 +57,11 @@ public:
 	uint16_t Pin_resetx;
 	GPIO_TypeDef *Port_enx;
 	uint16_t Pin_enx;
+
+private:
+	//#define PIN_MODE_OUTPUT	1
+	//#define PIN_MODE_INPUT	0
+	void changePinDirection(GPIO_TypeDef *port, uint16_t pin, uint16_t dir);
 };
 
 
