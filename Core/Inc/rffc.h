@@ -42,7 +42,6 @@ DIR_OUTPUT
 class RFFC
 {
 public:
-	RFFC(GPIO_TypeDef *port, uint16_t pin);
 	RFFC(GPIO_TypeDef *port_sclk, uint16_t pin_sclk, GPIO_TypeDef *port_sdata, uint16_t pin_sdata, GPIO_TypeDef *port_resetx, uint16_t pin_resetx, GPIO_TypeDef *port_enx, uint16_t pin_enx);
 	void write(uint8_t reg, uint16_t val);
 	uint16_t read(uint8_t reg);

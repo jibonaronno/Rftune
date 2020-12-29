@@ -23,8 +23,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdlib.h>
 #include "delay.h"
 #include "usbd_cdc_if.h"
+#include "rffc.h"
 
 /* USER CODE END Includes */
 
@@ -60,6 +62,7 @@ static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 // Previous function will be extern "C" void SystemClock_Config(void);
+static void MXEX_GPIO_INIT(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -99,9 +102,15 @@ int main(void)
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
 
+  MXEX_GPIO_INIT();
   HAL_TIM_Base_Start(&htim2);
 
+  RFFC rffc(GPIOD, GPIO_PIN_1, GPIOD, GPIO_PIN_4, GPIOD, GPIO_PIN_2, GPIOD, GPIO_PIN_0);
   //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
+
+  uint16_t SDI_CTRL = 0;
+
+  SDI_CTRL = rffc.read(0x15);
 
   /* USER CODE END 2 */
 
@@ -275,6 +284,22 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+static void MXEX_GPIO_INIT(void)
+{
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET);
+
+	GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_4;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(LED_RED_GPIO_Port, &GPIO_InitStruct);
+
+}
 
 /* USER CODE END 4 */
 
