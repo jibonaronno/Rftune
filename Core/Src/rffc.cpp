@@ -140,9 +140,6 @@ uint16_t RFFC::read(uint8_t reg)
 
 	RFFC5071_SCL();
 
-	HAL_GPIO_WritePin(Port_sdata, Pin_sdata, GPIO_PIN_SET); //it was reset before
-	RFFC5071_SCL();
-
 	//ireg is reg with R bit set
 	for(i=0; i<8; i++)
 	{
