@@ -160,8 +160,6 @@ uint16_t RFFC::read(uint8_t reg)
 		rmask >>= 1;
 	}
 
-	HAL_GPIO_WritePin(Port_sdata, Pin_sdata, GPIO_PIN_SET);
-
 	//1.5 clocks delay
 	RFFC5071_SCL();
 	//set SDA to input for a while

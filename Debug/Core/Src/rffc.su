@@ -2,4 +2,4 @@ rffc.cpp:24:1:RFFC::RFFC(GPIO_TypeDef*, uint16_t, GPIO_TypeDef*, uint16_t, GPIO_
 rffc.cpp:36:6:void RFFC::waitGPIO4IsHigh(GPIO_TypeDef*, uint16_t)	32	static
 rffc.cpp:46:6:void RFFC::write(uint8_t, uint16_t)	16	static
 rffc.cpp:100:10:uint16_t RFFC::read(uint8_t)	24	static
-rffc.cpp:193:6:void RFFC::changePinDirection(GPIO_TypeDef*, uint16_t, uint16_t)	24	static
+rffc.cpp:191:6:void RFFC::changePinDirection(GPIO_TypeDef*, uint16_t, uint16_t)	24	static
