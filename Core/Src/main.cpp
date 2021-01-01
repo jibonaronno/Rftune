@@ -78,6 +78,8 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	uint8_t cdc_buf[] = "Sample Text From CDC Buffer";
+	char ch_buf1[100];
+	int local_idx = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -111,7 +113,13 @@ int main(void)
   uint16_t SDI_CTRL = 0;
 
   SDI_CTRL = rffc.read(0x15);
-
+  sprintf(ch_buf1,"REG(15) : %03d\r\n", SDI_CTRL);
+  for(local_idx=0;local_idx<16;local_idx++)
+  {
+	  SDI_CTRL = rffc.read(local_idx);
+	  sprintf(ch_buf1,"REG(0X%04X) : 0X%04X\r\n", local_idx,  SDI_CTRL);
+	  CDC_Transmit_FS((uint8_t *)ch_buf1, strlen(ch_buf1));
+  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -129,8 +137,14 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  HAL_Delay(3000);
-	  CDC_Transmit_FS(cdc_buf, sizeof(cdc_buf));
+	HAL_Delay(5000);
+	for(local_idx=0;local_idx<16;local_idx++)
+	{
+	  SDI_CTRL = rffc.read(local_idx);
+	  sprintf(ch_buf1,"REG(0X%04X) : 0X%04X\r\n", local_idx,  SDI_CTRL);
+	  CDC_Transmit_FS((uint8_t *)ch_buf1, strlen(ch_buf1));
+	}
+	  //CDC_Transmit_FS(cdc_buf, sizeof(cdc_buf));
   }
   /* USER CODE END 3 */
 }
@@ -288,10 +302,10 @@ static void MX_GPIO_Init(void)
 static void MXEX_GPIO_INIT(void)
 {
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0, GPIO_PIN_SET);   //ENX - NORMALLY HIGH. ACTIVE LOW.
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_RESET); //SCLK
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET); //RESETX
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); //SDATA
 
 	GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_4;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;

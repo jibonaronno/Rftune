@@ -45,6 +45,7 @@ void RFFC::waitGPIO4IsHigh(GPIO_TypeDef *port, uint16_t pin)
 
 void RFFC::write(uint8_t reg, uint16_t val)
 {
+	/*
 	uint8_t i = 0;
 	uint8_t rmask = 0x80;
 	uint16_t vmask = 0x8000;
@@ -93,6 +94,7 @@ void RFFC::write(uint8_t reg, uint16_t val)
 	gpio_set_pin_high(chip->enx);
 	//one clock after enx goes high, undocumented
 	RFFC5071_SCL();
+	*/
 }
 
 uint16_t RFFC::read(uint8_t reg)
@@ -102,14 +104,45 @@ uint16_t RFFC::read(uint8_t reg)
 	uint16_t vmask = 0x8000;
 	uint16_t val = 0;
 	uint8_t ireg = 0x80 | reg;
+
+	/*
+	 * As described in
+	 * integrated_synthesizer_mixer_register_map_programming_guide.pdf Page-6 2.2.1 Three-Wire Bus Read Operation
+	 *
+	 * Also from https://github.com/mossmann/hackrf/blob/master/firmware/common/rffc5071_spi.c
+	 * Line 128
+	 *
+	 * SPI register read.
+	 *
+	 * Send 9 bits:
+	 *   first bit is ignored,
+	 *   second bit is one for read operation,
+	 *   next 7 bits are register address.
+	 * Then receive 16 bits (register value).
+	 *
+	 * At Line 153 it states that:
+	 * The device requires two clocks while ENX is high before a serial
+	 * transaction.  This is not clearly documented.
+	 *
+	 *
+	 */
+
+	//two clocks before enx goes low, undocumented
 	RFFC5071_SCL();
 	RFFC5071_SCL();
+
 	//gpio_set_pin_low(chip->enx);
-	HAL_GPIO_WritePin(Port_enex, Pin_enex, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Port_enx, Pin_enx, GPIO_PIN_RESET);
+
 	//clock out the undefined bit, set sda = 0
 	//gpio_set_pin_low(chip->sda);
 	HAL_GPIO_WritePin(Port_sdata, Pin_sdata, GPIO_PIN_RESET);
+
 	RFFC5071_SCL();
+
+	HAL_GPIO_WritePin(Port_sdata, Pin_sdata, GPIO_PIN_SET); //it was reset before
+	RFFC5071_SCL();
+
 	//ireg is reg with R bit set
 	for(i=0; i<8; i++)
 	{
@@ -143,13 +176,13 @@ uint16_t RFFC::read(uint8_t reg)
 		vmask >>= 1;
 	}
 
-	HAL_GPIO_WritePin(Port_sdata, Pin_sdata, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(Port_enx, Pin_enx, GPIO_PIN_SET);
 	//pull enx high again
 	RFFC5071_SCL();
 
 	changePinDirection(Port_sdata, Pin_sdata, 1); //1 for output
 
-	return 0;
+	return val;
 }
 
 //#define PIN_MODE_OUTPUT	1
