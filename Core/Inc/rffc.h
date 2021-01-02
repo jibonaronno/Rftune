@@ -8,7 +8,7 @@
 #ifndef INC_RFFC_H_
 #define INC_RFFC_H_
 
-#define RFFC5071_FSCL 10	//in us
+#define RFFC5071_FSCL 1000	//in us
 
 //register definitions that we will use
 #define RFFC5071_LF 0x00
