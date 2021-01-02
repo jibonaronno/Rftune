@@ -33,6 +33,16 @@ RFFC::RFFC(GPIO_TypeDef *port_sclk, uint16_t pin_sclk, GPIO_TypeDef *port_sdata,
 	Pin_enx = pin_enx;
 }
 
+void RFFC::resetHigh()
+{
+	HAL_GPIO_WritePin(Port_resetx, Pin_resetx, GPIO_PIN_SET);
+}
+
+void RFFC::resetLow()
+{
+	HAL_GPIO_WritePin(Port_resetx, Pin_resetx, GPIO_PIN_RESET);
+}
+
 void RFFC::waitGPIO4IsHigh(GPIO_TypeDef *port, uint16_t pin)
 {
 	uint8_t pinState = GPIO_PIN_RESET;

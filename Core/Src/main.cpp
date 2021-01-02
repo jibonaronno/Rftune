@@ -68,6 +68,16 @@ static void MXEX_GPIO_INIT(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+void usbPrint(const char *s)
+{
+	CDC_Transmit_FS((uint8_t *)s, strlen(s));
+}
+
+void usbPrint(uint8_t *s)
+{
+	CDC_Transmit_FS(s, strlen((char *)s));
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -107,10 +117,16 @@ int main(void)
   MXEX_GPIO_INIT();
   HAL_TIM_Base_Start(&htim2);
 
+  //RFFC(GPIO_TypeDef *port_sclk, uint16_t pin_sclk, GPIO_TypeDef *port_sdata, uint16_t pin_sdata, GPIO_TypeDef *port_resetx, uint16_t pin_resetx, GPIO_TypeDef *port_enx, uint16_t pin_enx);
   RFFC rffc(GPIOD, GPIO_PIN_1, GPIOD, GPIO_PIN_4, GPIOD, GPIO_PIN_2, GPIOD, GPIO_PIN_0);
   //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
 
   uint16_t SDI_CTRL = 0;
+
+  rffc.resetLow();
+  usbPrint("Reseting RFFC. Wait 10 Second");
+  HAL_Delay(10000);
+  rffc.resetHigh();
 
   SDI_CTRL = rffc.read(0x15);
   sprintf(ch_buf1,"REG(15) : %03d\r\n", SDI_CTRL);
