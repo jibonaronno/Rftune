@@ -146,7 +146,7 @@ uint16_t RFFC::read(uint8_t reg)
 
 	//clock out the undefined bit, set sda = 0
 	//gpio_set_pin_low(chip->sda);
-	HAL_GPIO_WritePin(Port_sdata, Pin_sdata, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Port_sdata, Pin_sdata, GPIO_PIN_SET);
 
 	RFFC5071_SCL();
 
