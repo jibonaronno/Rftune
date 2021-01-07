@@ -87,7 +87,7 @@ void usbPrint(uint8_t *s)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	uint8_t cdc_buf[] = "Sample Text From CDC Buffer";
+	//uint8_t cdc_buf[] = "Sample Text From CDC Buffer";
 	char ch_buf1[100];
 	int local_idx = 0;
   /* USER CODE END 1 */
@@ -119,6 +119,8 @@ int main(void)
 
   //RFFC(GPIO_TypeDef *port_sclk, uint16_t pin_sclk, GPIO_TypeDef *port_sdata, uint16_t pin_sdata, GPIO_TypeDef *port_resetx, uint16_t pin_resetx, GPIO_TypeDef *port_enx, uint16_t pin_enx);
   RFFC rffc(GPIOD, GPIO_PIN_1, GPIOD, GPIO_PIN_4, GPIOD, GPIO_PIN_2, GPIOD, GPIO_PIN_0);
+
+  RFFC r2fc(GPIOB, GPIO_PIN_3, GPIOB, GPIO_PIN_5, GPIOG, GPIO_PIN_14, GPIOG, GPIO_PIN_15);
   //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
 
   uint16_t SDI_CTRL = 0;
@@ -329,6 +331,12 @@ static void MXEX_GPIO_INIT(void)
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
+	GPIO_InitStruct.Pin = GPIO_PIN_3 | GPIO_PIN_5;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
 }
 
 /* USER CODE END 4 */
@@ -359,6 +367,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
+
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
