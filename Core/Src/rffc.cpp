@@ -171,7 +171,7 @@ uint16_t RFFC::read(uint8_t reg)
 	RFFC5071_SCL();
 	//set SDA to input for a while
 	//ioport_set_pin_dir(chip->sda,IOPORT_DIR_INPUT);
-	changePinDirection(Port_sdata, Pin_sdata, 0); //0 for input
+	changePinDirection(Port_sdata, 8, 0); //0 for input
 	//now the value
 	for(i=0; i<16; i++)
 	{
@@ -189,7 +189,7 @@ uint16_t RFFC::read(uint8_t reg)
 	RFFC5071_SCL();
 	RFFC5071_SCL();
 
-	changePinDirection(Port_sdata, Pin_sdata, 1); //1 for output
+	changePinDirection(Port_sdata, 8, 1); //1 for output
 
 	return val;
 }
@@ -200,11 +200,11 @@ void RFFC::changePinDirection(GPIO_TypeDef *port, uint16_t pin, uint16_t dir)
 {
 	if(dir == PIN_MODE_OUTPUT)
 	{
-		port->MODER |= (0b1001<<pin); // GPIO_MODER_MODE8_0;
+		port->MODER |= (0b01<<pin); // GPIO_MODER_MODE8_0;
 
 	}
 	else if(dir == PIN_MODE_INPUT)
 	{
-		port->MODER &= ~(0b0111<<pin);
+		port->MODER &= ~(0b11<<pin);
 	}
 }
