@@ -200,10 +200,11 @@ void RFFC::changePinDirection(GPIO_TypeDef *port, uint16_t pin, uint16_t dir)
 {
 	if(dir == PIN_MODE_OUTPUT)
 	{
-		port->MODER |= (0b01<<pin); // GPIO_MODER_MODE8_0;
+		port->MODER |= (0b1001<<pin); // GPIO_MODER_MODE8_0;
+
 	}
 	else if(dir == PIN_MODE_INPUT)
 	{
-		port->MODER &= ~(0b11<<pin);
+		port->MODER &= ~(0b0111<<pin);
 	}
 }

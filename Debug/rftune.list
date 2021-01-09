@@ -1463,11 +1463,11 @@ void RFFC::changePinDirection(GPIO_TypeDef *port, uint16_t pin, uint16_t dir)
  8000b68:	2b01      	cmp	r3, #1
  8000b6a:	d109      	bne.n	8000b80 <_ZN4RFFC18changePinDirectionEP12GPIO_TypeDeftt+0x30>
 	{
-		port->MODER |= (0b01<<pin); // GPIO_MODER_MODE8_0;
+		port->MODER |= (0b1001<<pin); // GPIO_MODER_MODE8_0;
  8000b6c:	68bb      	ldr	r3, [r7, #8]
  8000b6e:	681b      	ldr	r3, [r3, #0]
  8000b70:	88fa      	ldrh	r2, [r7, #6]
- 8000b72:	2101      	movs	r1, #1
+ 8000b72:	2109      	movs	r1, #9
  8000b74:	fa01 f202 	lsl.w	r2, r1, r2
  8000b78:	431a      	orrs	r2, r3
  8000b7a:	68bb      	ldr	r3, [r7, #8]
@@ -1475,7 +1475,7 @@ void RFFC::changePinDirection(GPIO_TypeDef *port, uint16_t pin, uint16_t dir)
 	}
 	else if(dir == PIN_MODE_INPUT)
 	{
-		port->MODER &= ~(0b11<<pin);
+		port->MODER &= ~(0b0111<<pin);
 	}
 }
  8000b7e:	e00c      	b.n	8000b9a <_ZN4RFFC18changePinDirectionEP12GPIO_TypeDeftt+0x4a>
@@ -1483,11 +1483,11 @@ void RFFC::changePinDirection(GPIO_TypeDef *port, uint16_t pin, uint16_t dir)
  8000b80:	88bb      	ldrh	r3, [r7, #4]
  8000b82:	2b00      	cmp	r3, #0
  8000b84:	d109      	bne.n	8000b9a <_ZN4RFFC18changePinDirectionEP12GPIO_TypeDeftt+0x4a>
-		port->MODER &= ~(0b11<<pin);
+		port->MODER &= ~(0b0111<<pin);
  8000b86:	68bb      	ldr	r3, [r7, #8]
  8000b88:	681b      	ldr	r3, [r3, #0]
  8000b8a:	88fa      	ldrh	r2, [r7, #6]
- 8000b8c:	2103      	movs	r1, #3
+ 8000b8c:	2107      	movs	r1, #7
  8000b8e:	fa01 f202 	lsl.w	r2, r1, r2
  8000b92:	43d2      	mvns	r2, r2
  8000b94:	401a      	ands	r2, r3
