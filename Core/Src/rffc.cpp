@@ -187,6 +187,7 @@ uint16_t RFFC::read(uint8_t reg)
 	HAL_GPIO_WritePin(Port_enx, Pin_enx, GPIO_PIN_SET);
 	//pull enx high again
 	RFFC5071_SCL();
+	RFFC5071_SCL();
 
 	changePinDirection(Port_sdata, Pin_sdata, 1); //1 for output
 
@@ -199,10 +200,10 @@ void RFFC::changePinDirection(GPIO_TypeDef *port, uint16_t pin, uint16_t dir)
 {
 	if(dir == PIN_MODE_OUTPUT)
 	{
-		port->MODER |= (0x0001<<pin); // GPIO_MODER_MODE8_0;
+		port->MODER |= (0b01<<pin); // GPIO_MODER_MODE8_0;
 	}
 	else if(dir == PIN_MODE_INPUT)
 	{
-		port->MODER &= ~(0x0003<<pin);
+		port->MODER &= ~(0b11<<pin);
 	}
 }
