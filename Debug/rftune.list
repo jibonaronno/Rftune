@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  000201f4  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0001d016  00000000  00000000  00020224  2**0
+ 12 .debug_info   0001d03e  00000000  00000000  00020224  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_abbrev 00003a06  00000000  00000000  0003d23a  2**0
+ 13 .debug_abbrev 00003a06  00000000  00000000  0003d262  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_aranges 000013e8  00000000  00000000  00040c40  2**3
+ 14 .debug_aranges 000013e8  00000000  00000000  00040c68  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_ranges 00001240  00000000  00000000  00042028  2**3
+ 15 .debug_ranges 00001240  00000000  00000000  00042050  2**3
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_macro  0002ec0c  00000000  00000000  00043268  2**0
+ 16 .debug_macro  0002ec0c  00000000  00000000  00043290  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   000132ed  00000000  00000000  00071e74  2**0
+ 17 .debug_line   00013339  00000000  00000000  00071e9c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    001035fe  00000000  00000000  00085161  2**0
+ 18 .debug_str    001035fe  00000000  00000000  000851d5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  0018875f  2**0
+ 19 .comment      0000007b  00000000  00000000  001887d3  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000552c  00000000  00000000  001887dc  2**2
+ 20 .debug_frame  0000552c  00000000  00000000  00188850  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -1085,7 +1085,7 @@ void RFFC::resetLow()
 
 080008a4 <_ZN4RFFC4readEh>:
 	RFFC5071_SCL();
-	*/
+	RFFC5071_SCL();
 }
 
 uint16_t RFFC::read(uint8_t reg)

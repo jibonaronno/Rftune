@@ -55,7 +55,7 @@ void RFFC::waitGPIO4IsHigh(GPIO_TypeDef *port, uint16_t pin)
 
 void RFFC::write(uint8_t reg, uint16_t val)
 {
-	/*
+
 	uint8_t i = 0;
 	uint8_t rmask = 0x80;
 	uint16_t vmask = 0x8000;
@@ -101,10 +101,11 @@ void RFFC::write(uint8_t reg, uint16_t val)
 		vmask >>= 1;
 	}
 	//pull enx high again
-	gpio_set_pin_high(chip->enx);
+	//gpio_set_pin_high(chip->enx);
+	HAL_GPIO_WritePin(Port_enx, Pin_enx, GPIO_PIN_SET);
 	//one clock after enx goes high, undocumented
 	RFFC5071_SCL();
-	*/
+	RFFC5071_SCL();
 }
 
 uint16_t RFFC::read(uint8_t reg)
